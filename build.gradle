@@ -1,0 +1,63 @@
+buildscript {
+	ext {
+		springBootVersion = '1.2.3.RELEASE'
+	}
+	repositories {
+		jcenter()
+		maven { url "https://plugins.gradle.org/m2/" }
+	}
+	dependencies {
+		classpath(group: 'org.sonarqube.gradle', name: 'gradle-sonarqube-plugin', version: '1.1')
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath("io.spring.gradle:dependency-management-plugin:0.5.0.RELEASE")
+		classpath("gradle.plugin.com.gorylenko.gradle-git-properties:gradle-git-properties:1.4.7")
+	}
+}
+
+repositories {
+	jcenter()
+}
+
+apply plugin: 'spring-boot'
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'war'
+apply plugin: "org.sonarqube"
+apply plugin: 'jacoco'
+apply plugin: 'com.gorylenko.gradle-git-properties'
+
+dependencies {
+	compile 'org.springframework.boot:spring-boot-starter-actuator'
+	compile 'org.springframework.boot:spring-boot-starter-test'
+	compile 'org.springframework.boot:spring-boot-starter-aop'
+	compile 'org.springframework.boot:spring-boot-starter-web'
+	compile 'org.springframework.cloud:spring-cloud-starter-config:1.0.3.RELEASE'
+	compile 'javax.persistence:persistence-api:1.0'
+	compile 'org.springframework.boot:spring-boot-starter-log4j2'
+	compile 'org.springframework.boot:spring-boot-starter-jdbc'
+	compile 'mysql:mysql-connector-java:5.1.38'
+	compile 'org.springframework:spring-oxm'
+	compile 'org.simpleframework:simple-xml:2.7.1'
+	compile 'io.springfox:springfox-swagger2:2.0.0'
+	compile 'io.springfox:springfox-swagger-ui:2.0.0'
+	compile 'com.wordnik:swagger-jersey2-jaxrs_2.10:1.3.8'
+	compile 'com.mangofactory:swagger-springmvc:1.0.2'
+	compile 'redis.clients:jedis:2.8.0'
+	compile 'org.springframework.data:spring-data-redis:1.6.1.RELEASE'
+	compile 'org.springframework.cloud:spring-cloud-spring-service-connector:1.2.1.RELEASE'
+	compile 'org.springframework.cloud:spring-cloud-cloudfoundry-connector:1.2.1.RELEASE'
+	testCompile "junit:junit:4.12"
+	testCompile "org.springframework.boot:spring-boot-starter-test"
+}
+
+
+task cacheDeps {
+	print("Downloading dependencies")
+}
+
+allprojects {
+	configurations.all {
+		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+		exclude group: 'javax.servlet'
+	}
+}
