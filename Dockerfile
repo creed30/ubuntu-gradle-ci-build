@@ -2,7 +2,8 @@ FROM java:8
 
 ENV PORT=8080 \
     GRADLE_HOME=/usr/bin/gradle-2.14 \
-    PATH=$PATH:/usr/bin/gradle-2.14/bin
+    PATH=$PATH:/usr/bin/gradle-2.14/bin \
+    PATH=$PATH:/meta/.cli
 
 EXPOSE 8080
 
@@ -18,4 +19,5 @@ RUN wget -q https://services.gradle.org/distributions/gradle-2.14-bin.zip -O gra
     && gradle build \
     && gradle test \
     && git config --global user.name CI-BuildBot \
-    && git config --global user.email svc_payments_ci
+    && git config --global user.email svc_payments_ci \
+    && tar -xzf cf-cli*.tgz -C /usr/bin/
