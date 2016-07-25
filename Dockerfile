@@ -2,14 +2,14 @@ FROM java:8
 
 ENV PORT=8080 \
     GRADLE_HOME=/usr/bin/gradle-2.14 \
-    PATH=$PATH:/usr/bin/gradle-2.14/bin \
-    PATH=$PATH:/meta/.cli
+    PATH=$PATH:/usr/bin/gradle-2.14/bin:/meta/.cli
 
 EXPOSE 8080
 
 ADD . /meta
 
 WORKDIR /usr/bin
+
 RUN wget -q https://services.gradle.org/distributions/gradle-2.14-bin.zip -O gradle.zip \
     && unzip -q gradle.zip \
     && rm gradle.zip \
