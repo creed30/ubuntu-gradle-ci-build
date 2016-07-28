@@ -6,6 +6,10 @@ ENV PORT=8080 \
 
 EXPOSE 8080
 
+RUN curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+
+RUN apt-get update && apt-get install --yes nodejs
+
 ADD . /meta
 
 WORKDIR /usr/bin
@@ -22,9 +26,7 @@ RUN wget -q https://services.gradle.org/distributions/gradle-2.14-bin.zip -O gra
     && git config --global user.email svc_payments_ci \
     && tar -xzf cf-cli*.tgz -C /usr/bin/
     
-RUN curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 
-RUN apt-get update && apt-get install --yes nodejs
 
 
 RUN wget https://cli.run.pivotal.io/stable?release=linux64-binary -O /tmp/cf.tgz --no-check-certificate
