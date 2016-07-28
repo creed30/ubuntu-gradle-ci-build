@@ -21,3 +21,13 @@ RUN wget -q https://services.gradle.org/distributions/gradle-2.14-bin.zip -O gra
     && git config --global user.name CI-BuildBot \
     && git config --global user.email svc_payments_ci \
     && tar -xzf cf-cli*.tgz -C /usr/bin/
+    
+RUN curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+
+RUN apt-get update && apt-get install --yes nodejs
+
+
+RUN wget https://cli.run.pivotal.io/stable?release=linux64-binary -O /tmp/cf.tgz --no-check-certificate
+RUN tar zxf /tmp/cf.tgz -C /usr/bin && chmod 755 /usr/bin/cf
+
+RUN npm install -g gulp
